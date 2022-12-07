@@ -17,8 +17,11 @@
 
 <script>
     $(document).ready(function() {
-        $.post('').done(function(data){
+        $.post('/Full-Stack_Programming/Project_UAS_FSP/ajax/selectAll.php').done(function(data){
+            console.log(data)
+            $.each(data, function(index, value){
 
+            })
         })
     })
 </script>
