@@ -45,8 +45,8 @@
 <script>
     $('body').on('click', '#login', function() {
         $.post("/ajax/login.php", {
-                username: $('#username'),
-                name: $('#password')
+                username: $('#username').val(),
+                name: $('#password').val()
             })
             .done(function(data) {
                 if(data == "true")
