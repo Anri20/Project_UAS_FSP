@@ -7,17 +7,18 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login</title>
     <link rel="stylesheet" href="css/login.css">
+    <script src="/script/jquery-3.6.1.min.js"></script>
 </head>
 
 <body>
     <div class="container">
         <h1>LOGIN</h1>
-        <form action="" method="post">
+        <form action="/ajax/login.php" method="POST">
             Username: <br>
-            <input type="text" name="username"><br><br>
+            <input type="text" id="username"><br><br>
             Password: <br>
-            <input type="password" name="password"><br><br>
-            <input type="submit" name="login" value="LOGIN">
+            <input type="password" id="password"><br><br>
+            <input type="button" id="login" value="LOGIN">
         </form>
     </div>
     <?php
@@ -41,5 +42,22 @@
     }
     ?>
 </body>
+<script>
+    $('body').on('click', '#login', function() {
+        $.post("/ajax/login.php", {
+                username: $('#username'),
+                name: $('#password')
+            })
+            .done(function(data) {
+                if(data == "true")
+                {
+                    //bisa login
+                }
+                else{
+                    alert("Data tidak ditemukan");
+                }
+            });
+    });
+</script>
 
 </html>
