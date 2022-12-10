@@ -18,17 +18,25 @@ if ($conn->connect_error) {
     echo "Connection Error";
 } else {
     extract($_POST);
-    $sql = "SELECT * FROM users where username ='$username' and password = '$password'";
-    $stmt = $conn->prepare($sql);
-    $stmt->execute();
-    $result = $stmt->get_result();
+    $sql = "SELECT * FROM memes";
+    // $stmt = $conn->prepare($sql);
+    // $stmt->execute();
+    // $result = $stmt->get_result();
+    $result = $conn->query($sql);
 
-    if ($result->num_rows > 0) {
-        setcookie('username', $username, time() + 3600, "/");
-        echo "True";
+    $perPage = 12;
+    $sumData = $result->num_rows;
+    $sumPage = ceil($sumData/$perPage);
+
+    $data = [];
+    if ($sumData > 0) {
+        while ($r = $result->fetch_assoc()) {
+            array_push($data, $r);
+        }
+        echo json_encode($data);
     } else {
-        echo "False";
+        echo "Error";
     }
 }
-$stmt->close();
+// $stmt->close();
 $conn->close();

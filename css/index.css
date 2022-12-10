@@ -1,0 +1,36 @@
+/* .container{
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    grid-gap: 1rem;
+} */
+
+.meme {
+    padding: 1%;
+    width: fit-content;
+    border: 1px solid black;
+    border-radius: 20px;
+    box-shadow: 5px 5px gray;
+    display: grid;
+    grid-template-areas:
+        "🖼️ 🖼️"
+        "❤️ 💬";
+}
+
+#image-section {
+    grid-area: 🖼️;
+}
+
+#like-section {
+    grid-area: ❤️;
+    font-size: 30px;
+    padding: 5% 5% 0 5%;
+}
+
+#comment-section {
+    grid-area: 💬;
+    display: flex;
+    justify-content: flex-end;
+    font-size: 30px;
+    margin-top: 1%;
+    padding: 5% 5% 0 5%;
+}

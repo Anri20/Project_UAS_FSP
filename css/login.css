@@ -1,3 +1,50 @@
-.container{
+body {
+    margin: 0;
+    padding: 0;
+}
+
+input {
+    margin: 0 1%;
+    padding: 10px 1%;
+}
+
+.container {
+    position: relative;
     text-align: center;
+    height: 100vh;
+}
+
+.center {
+    top: 30%;
+    position: absolute;
+    /* transform: translateY(-75%); */
+    width: 100%;
+}
+
+::placeholder {
+    color: red;
+}
+
+@media all and (max-width: 425px) {
+    input {
+        margin: 1% 1%;
+    }
+
+    #username {
+        width: 80%;
+    }
+
+    #password {
+        width: 80%;
+    }
+
+    #login{
+        width: 20%;
+    }
+
+    #formLogin {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
 }
