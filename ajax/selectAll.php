@@ -23,7 +23,7 @@ if ($conn->connect_error) {
     // $stmt->execute();
     // $result = $stmt->get_result();
     $result = $conn->query($sql);
-
+    
     $perPage = 12;
     $sumData = $result->num_rows;
     $sumPage = ceil($sumData/$perPage);

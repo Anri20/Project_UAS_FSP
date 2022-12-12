@@ -17,7 +17,6 @@ input {
 .center {
     top: 30%;
     position: absolute;
-    /* transform: translateY(-75%); */
     width: 100%;
 }
 
