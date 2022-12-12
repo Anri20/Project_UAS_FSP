@@ -21,6 +21,8 @@ if (!isset($_COOKIE['username'])) {
     $user = $_COOKIE['username'];
     echo "<input id='username' type='hidden' value='$user'>";
     ?>
+    <a id="logout" href="logout.php">Logout</a>
+    <br>
     <div class="container">
 
         <!-- <i class="fa fa-comment fa-5x"></i>
