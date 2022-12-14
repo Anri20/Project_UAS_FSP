@@ -1,15 +1,15 @@
 <?php
 header("Access-Control-Allow-Origin: *");
-$arr = null;
+
 $sname = "localhost";
 $uname = "root";
 $pass = "";
 $dbname = "uas_fsp_memes";
 
 // $sname = "localhost";
-// $uname = "hybrid_160720039";
-// $pass = "ubaya";
-// $dbname = "hybrid_160720039";
+// $uname = "id20010020_root";
+// $pass = "%<cM^Ms9S#(AOcL#";
+// $dbname = "id20010020_uas_fsp_memes";
 
 // Create connection
 $conn = new mysqli($sname, $uname, $pass, $dbname);

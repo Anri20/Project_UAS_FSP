@@ -6,6 +6,11 @@ $user = $_COOKIE['username'];
 // echo "<input id='username' type='hidden' value='$user'>";
 echo "<script>localStorage.setItem('username', $user)</script>";
 ?>
+<!-- <script>
+    if(localStorage.getItem('username') != null || localStorage.getItem('username') != ""){
+
+    }
+</script> -->
 <!DOCTYPE html>
 <html lang="en">
 
@@ -20,25 +25,14 @@ echo "<script>localStorage.setItem('username', $user)</script>";
 </head>
 
 <body>
-    <?php
-    // $user = $_COOKIE['username'];
-    // echo "<input id='username' type='hidden' value='$user'>";
-    // echo "<script>localStorage.setItem('username', $user)</script>";
-    ?>
     <a id="logout" href="logout.php">Logout</a>
     <br>
+    <!-- MEME -->
     <div class="container">
 
-        <!-- <i class="fa fa-comment fa-5x"></i>
-        <i class="fa fa-heart fa-5x"></i>
-        <i class="fa fa-heart-o fa-5x"></i> -->
-        <!-- <div class='meme'>
-            <img id="image-section" src='assets/img/1.jpg'>
-            <i id="like-section" class='fa fa-heart fa-2x'></i>
-            <i id="comment-section" class='fa fa-comment-o fa-2x'></i>
-        </div> -->
     </div>
     <br>
+    <!-- Paging -->
     <div class="paging">
 
     </div>
@@ -74,10 +68,9 @@ echo "<script>localStorage.setItem('username', $user)</script>";
             $('.paging').append(`<a onclick="changePage('first')"> << </a>`)
             $('.paging').append(`<a onclick="changePage('back')"> < </a>`)
             for (let i = 1; i <= sumPage; i++) {
-                // $('.paging').append(`<button id=${i} class=pagingBtn><a href="index.php?p=${i}">${i}</a></button>`)
-                if(i == 1){
+                if (i == 1) {
                     $('.paging').append(`<a id="page_${i}" class="pagingBtn dot" onclick="changeToPage(this)" value="${i}">${i}</a>`)
-                }else{
+                } else {
                     $('.paging').append(`<a id="page_${i}" class="pagingBtn" onclick="changeToPage(this)" value="${i}">${i}</a>`)
                 }
             }
@@ -148,13 +141,13 @@ echo "<script>localStorage.setItem('username', $user)</script>";
         })
     }
 
-    function detailMemes(id) {
-        $.post('ajax/memes.php', {
-            Id: id,
-        }).done(function(result) {
-            //mau di buat pop up trs di append ke detail memes
-        })
-    }
+    // function detailMemes(id) {
+    //     $.post('ajax/memes.php', {
+    //         Id: id,
+    //     }).done(function(result) {
+    //         //mau di buat pop up trs di append ke detail memes
+    //     })
+    // }
 
     function btnLike(id) {
         $.post('ajax/changeLike.php', {
