@@ -76,9 +76,9 @@ echo "<script>localStorage.setItem('username', $user)</script>";
             for (let i = 1; i <= sumPage; i++) {
                 // $('.paging').append(`<button id=${i} class=pagingBtn><a href="index.php?p=${i}">${i}</a></button>`)
                 if(i == 1){
-                    $('.paging').append(`<a id="${i}" class="pagingBtn dot" onclick="changeToPage(this.id)">${i}</a>`)
+                    $('.paging').append(`<a id="page_${i}" class="pagingBtn dot" onclick="changeToPage(this)" value="${i}">${i}</a>`)
                 }else{
-                    $('.paging').append(`<a id="${i}" class="pagingBtn" onclick="changeToPage(this.id)">${i}</a>`)
+                    $('.paging').append(`<a id="page_${i}" class="pagingBtn" onclick="changeToPage(this)" value="${i}">${i}</a>`)
                 }
             }
             $('.paging').append(`<a onclick="changePage('next')"> > </a>`)
@@ -113,15 +113,16 @@ echo "<script>localStorage.setItem('username', $user)</script>";
                     </div>`)
             })
 
-            $(`#${localStorage.getItem('pageNow')}`).removeClass("dot")
+            $(`#page_${localStorage.getItem('pageNow')}`).removeClass("dot")
             localStorage.setItem('pageNow', data['thisPage'])
-            $(`#${localStorage.getItem('pageNow')}`).addClass("dot")
+            $(`#page_${localStorage.getItem('pageNow')}`).addClass("dot")
         })
     }
 
     function changeToPage(pageNum) {
+        // alert(pageNum.getAttribute('value'))
         $.post('ajax/paging.php', {
-            page: pageNum,
+            page: pageNum.getAttribute('value'),
             perPage: perpage,
         }).done(function(result) {
             let data = JSON.parse(result)
@@ -141,9 +142,9 @@ echo "<script>localStorage.setItem('username', $user)</script>";
                     </div>`)
             })
 
-            $(`#${localStorage.getItem('pageNow')}`).removeClass("dot")
-            localStorage.setItem('pageNow', pageNum)
-            $(`#${localStorage.getItem('pageNow')}`).addClass("dot")
+            $(`#page_${localStorage.getItem('pageNow')}`).removeClass("dot")
+            localStorage.setItem('pageNow', pageNum.getAttribute('value'))
+            $(`#page_${localStorage.getItem('pageNow')}`).addClass("dot")
         })
     }
 
