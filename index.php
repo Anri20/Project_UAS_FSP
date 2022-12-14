@@ -108,7 +108,7 @@ echo "<script>localStorage.setItem('username', $user)</script>";
                 $('.container').append(
                     `<div class='meme'>
                         <a href='detailmemes.php?id=${value['idmemes']}' onclick="detailMemes(this.id)"><img id="image-section" src="assets/img/${value['imgURL']}.jpg"></a>
-                        <div id="like-section"><i id="${value['idmemes']}" class="fa fa-heart" onclick="btnLike(this.id)" style="color: red;"></i><span id="like_${value['idmemes']}">${value['like']+likeUnit}</span></div>                        
+                        <div id="like-section"><i id="${value['idmemes']}" class="fa fa-heart" onclick="btnLike(this.id)" style="color: red;"></i> <span id="like_${value['idmemes']}">${value['like']+likeUnit}</span></div>                        
                         <i id="comment-section" class='fa fa-comment-o'></i>
                     </div>`)
             })
@@ -137,7 +137,7 @@ echo "<script>localStorage.setItem('username', $user)</script>";
                 $('.container').append(
                     `<div class='meme'>
                         <a href='detailmemes.php?id=${value['idmemes']}' onclick="detailMemes(this.id)"><img id="image-section" src="assets/img/${value['imgURL']}.jpg"></a>
-                        <div id="like-section"><i id="${value['idmemes']}" class="fa fa-heart" onclick="btnLike(this.id)" style="color: red;"></i><span id="like_${value['idmemes']}">${value['like']+likeUnit}</span></div>                        
+                        <div id="like-section"><i id="${value['idmemes']}" class="fa fa-heart" onclick="btnLike(this.id)" style="color: red;"></i> <span id="like_${value['idmemes']}">${value['like']+likeUnit}</span></div>                        
                         <i id="comment-section" class='fa fa-comment-o'></i>
                     </div>`)
             })
