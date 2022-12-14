@@ -12,10 +12,14 @@
     align-items: center;
     max-width: 80%;
     margin: auto;
+    border: 1px solid black;
+    box-shadow: 5px 5px gray;
+    padding: 2em;
 }
 
 .meme {
     padding: 4%;
+    margin: 0 auto;
     width: fit-content;
     height: fit-content;
     border: 1px solid black;
@@ -25,6 +29,29 @@
     grid-template-areas:
         "🖼️ 🖼️"
         "❤️ 💬";
+}
+
+.paging {
+    display: flex;
+    justify-content: center;
+}
+
+.paging>a {
+    color: black;
+    text-align: center;
+    text-decoration: none;
+    margin: 0 6px;
+}
+
+.paging>a:hover {
+    cursor: pointer;
+}
+
+.dot {
+    height: 18px;
+    width: 18px;
+    background-color: #bbb;
+    border-radius: 50%;
 }
 
 #image-section {

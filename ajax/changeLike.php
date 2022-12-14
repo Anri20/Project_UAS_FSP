@@ -53,5 +53,7 @@ if ($conn->connect_error) {
         echo "Error";
     }
 }
-// $stmt->close();
+$stmt->close();
+$stmt1->close();
+$stmt2->close();
 $conn->close();

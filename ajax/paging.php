@@ -18,20 +18,22 @@ if ($conn->connect_error) {
     echo "Connection Error";
 } else {
     extract($_POST);
-    $sql = "SELECT * FROM memes where id = $id";
+    $start = ($page - 1) * $perPage;
+    $sql = "SELECT * FROM memes limit $start, $perPage";
     // $stmt = $conn->prepare($sql);
     // $stmt->execute();
     // $result = $stmt->get_result();
     $result = $conn->query($sql);
 
-    $sumData = $result->num_rows;
-    $sumPage = ceil($sumData / $perPage);
-
     $data = [];
-    if ($sumData > 0) {
+    $memes = [];
+    if ($result->num_rows > 0) {
         while ($r = $result->fetch_assoc()) {
-            array_push($data, $r);
+            array_push($memes, $r);
+            // array_push($data['data'], $r);
         }
+        $data['memes'] = $memes;
+        $data['thisPage'] = $page;
         echo json_encode($data);
     } else {
         echo "Error";

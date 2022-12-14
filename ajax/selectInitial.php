@@ -23,16 +23,26 @@ if ($conn->connect_error) {
     // $stmt->execute();
     // $result = $stmt->get_result();
     $result = $conn->query($sql);
-    
-    $perPage = 12;
+
     $sumData = $result->num_rows;
-    $sumPage = ceil($sumData/$perPage);
+    $sumPage = ceil($sumData / $perPage);
+
+    $sql1 = "SELECT * FROM memes limit 0,12";
+    // $stmt = $conn->prepare($sql);
+    // $stmt->execute();
+    // $result = $stmt->get_result();
+    $result1 = $conn->query($sql1);
 
     $data = [];
+    $memes = [];
     if ($sumData > 0) {
-        while ($r = $result->fetch_assoc()) {
-            array_push($data, $r);
+        while ($r = $result1->fetch_assoc()) {
+            array_push($memes, $r);
+            // array_push($data['data'], $r);
         }
+        $data['memes'] = $memes;
+        $data['sumPage'] = $sumPage;
+        $data['thisPage'] = 1;
         echo json_encode($data);
     } else {
         echo "Error";

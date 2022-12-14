@@ -2,6 +2,9 @@
 if (!isset($_COOKIE['username'])) {
     header('location: loginUI.php');
 }
+$user = $_COOKIE['username'];
+// echo "<input id='username' type='hidden' value='$user'>";
+echo "<script>localStorage.setItem('username', $user)</script>";
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -18,10 +21,11 @@ if (!isset($_COOKIE['username'])) {
 
 <body>
     <?php
-    $user = $_COOKIE['username'];
-    echo "<input id='username' type='hidden' value='$user'>";
+    // $user = $_COOKIE['username'];
+    // echo "<input id='username' type='hidden' value='$user'>";
+    // echo "<script>localStorage.setItem('username', $user)</script>";
     ?>
-    <a id="logout" href="loginUI.php">Logout</a>
+    <a id="logout" href="logout.php">Logout</a>
     <br>
     <div class="container">
 
@@ -34,15 +38,25 @@ if (!isset($_COOKIE['username'])) {
             <i id="comment-section" class='fa fa-comment-o fa-2x'></i>
         </div> -->
     </div>
+    <br>
+    <div class="paging">
+
+    </div>
 </body>
 
 <script>
+    let perpage = 12
+    let sumPage = 0
     $(document).ready(function() {
-        $.post('ajax/selectAll.php', {
-            userId: $('#username').val(),
+        $.post('ajax/selectInitial.php', {
+            userId: localStorage.getItem('username'),
+            perPage: perpage,
         }).done(function(result) {
             let data = JSON.parse(result)
-            $.each(data, function(index, value) {
+            sumPage = data['sumPage']
+            console.log(data)
+            $('.container').html('')
+            $.each(data['memes'], function(index, value) {
                 console.log(value)
                 let likeUnit = " like"
                 if (value['like'] > 1) {
@@ -55,11 +69,86 @@ if (!isset($_COOKIE['username'])) {
                         <i id="comment-section" class='fa fa-comment-o'></i>
                     </div>`)
             })
+
+            $('.paging').html('')
+            $('.paging').append(`<a onclick="changePage('first')"> << </a>`)
+            $('.paging').append(`<a onclick="changePage('back')"> < </a>`)
+            for (let i = 1; i <= sumPage; i++) {
+                // $('.paging').append(`<button id=${i} class=pagingBtn><a href="index.php?p=${i}">${i}</a></button>`)
+                if(i == 1){
+                    $('.paging').append(`<a id="${i}" class="pagingBtn dot" onclick="changeToPage(this.id)">${i}</a>`)
+                }else{
+                    $('.paging').append(`<a id="${i}" class="pagingBtn" onclick="changeToPage(this.id)">${i}</a>`)
+                }
+            }
+            $('.paging').append(`<a onclick="changePage('next')"> > </a>`)
+            $('.paging').append(`<a onclick="changePage('last')"> >> </a>`)
         })
+
+        localStorage.setItem('pageNow', 1)
     })
 
+    function changePage(command) {
+        // alert(command)
+        $.post('ajax/paging2.php', {
+            pageNow: localStorage.getItem('pageNow'),
+            command: command,
+            perPage: perpage,
+            totPage: sumPage,
+        }).done(function(result) {
+            let data = JSON.parse(result)
+            console.log(data)
+            $('.container').html('')
+            $.each(data['memes'], function(index, value) {
+                console.log(value)
+                let likeUnit = " like"
+                if (value['like'] > 1) {
+                    likeUnit = " likes"
+                }
+                $('.container').append(
+                    `<div class='meme'>
+                        <a href='detailmemes.php?id=${value['idmemes']}' onclick="detailMemes(this.id)"><img id="image-section" src="assets/img/${value['imgURL']}.jpg"></a>
+                        <div id="like-section"><i id="${value['idmemes']}" class="fa fa-heart" onclick="btnLike(this.id)" style="color: red;"></i><span id="like_${value['idmemes']}">${value['like']+likeUnit}</span></div>                        
+                        <i id="comment-section" class='fa fa-comment-o'></i>
+                    </div>`)
+            })
+
+            $(`#${localStorage.getItem('pageNow')}`).removeClass("dot")
+            localStorage.setItem('pageNow', data['thisPage'])
+            $(`#${localStorage.getItem('pageNow')}`).addClass("dot")
+        })
+    }
+
+    function changeToPage(pageNum) {
+        $.post('ajax/paging.php', {
+            page: pageNum,
+            perPage: perpage,
+        }).done(function(result) {
+            let data = JSON.parse(result)
+            console.log(data)
+            $('.container').html('')
+            $.each(data['memes'], function(index, value) {
+                console.log(value)
+                let likeUnit = " like"
+                if (value['like'] > 1) {
+                    likeUnit = " likes"
+                }
+                $('.container').append(
+                    `<div class='meme'>
+                        <a href='detailmemes.php?id=${value['idmemes']}' onclick="detailMemes(this.id)"><img id="image-section" src="assets/img/${value['imgURL']}.jpg"></a>
+                        <div id="like-section"><i id="${value['idmemes']}" class="fa fa-heart" onclick="btnLike(this.id)" style="color: red;"></i><span id="like_${value['idmemes']}">${value['like']+likeUnit}</span></div>                        
+                        <i id="comment-section" class='fa fa-comment-o'></i>
+                    </div>`)
+            })
+
+            $(`#${localStorage.getItem('pageNow')}`).removeClass("dot")
+            localStorage.setItem('pageNow', pageNum)
+            $(`#${localStorage.getItem('pageNow')}`).addClass("dot")
+        })
+    }
+
     function detailMemes(id) {
-        $.post('ajax/memes.php', {        
+        $.post('ajax/memes.php', {
             Id: id,
         }).done(function(result) {
             //mau di buat pop up trs di append ke detail memes
@@ -68,7 +157,7 @@ if (!isset($_COOKIE['username'])) {
 
     function btnLike(id) {
         $.post('ajax/changeLike.php', {
-            userId: $('#username').val(),
+            userId: localStorage.getItem('username'),
             memesId: id,
         }).done(function(result) {
             // alert(result)

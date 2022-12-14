@@ -17,7 +17,9 @@ $conn = new mysqli($sname, $uname, $pass, $dbname);
 if ($conn->connect_error) {
     echo "Connection Error";
 } else {
-    extract($_POST);
+    // extract($_POST);
+    $username = 160420082;
+    $password = 160420082;
     $sql = "SELECT * FROM users where username ='$username' and password = '$password'";
     $stmt = $conn->prepare($sql);
     $stmt->execute();
